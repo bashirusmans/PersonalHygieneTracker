@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="input-group mt-3">
+          <form id="new">
+            <div class="d-flex">
+                <input required class="mx-1 dark" placeholder="Enter new routine here" type="text" id="input-field">
+                <button type="submit" form="new" class="dark submit-button"><span>ADD</span></button>
+            </div>
+          </form>
+    </div>
+    <div class="d-inline-flex">
+        <div data-mode="dark" class="row row-cols-1 row-cols-md-4 g-4" id="tasks">
+
+        </div>
+    </div>
+{% endblock %}
