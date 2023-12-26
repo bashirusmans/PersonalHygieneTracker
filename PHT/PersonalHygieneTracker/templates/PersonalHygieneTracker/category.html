@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {% for routine in routines %}
+            <div>{{routine}}</div>
+        {% endfor %}
+    </div>
+{% endblock %}

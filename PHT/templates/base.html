@@ -25,11 +25,22 @@
                   <div class="mt-2" style="margin-right:1rem">
                         <span>Dark mode</span>
                   </div>
-                  <div><a href="{% url 'login' %}" class="btn btn-outline-danger">Login</a></div>
+                  {% if request.user.is_authenticated %}
+                    <div><a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a></div>
+                  {% else %}
+                    <div><a href="{% url 'login' %}" class="btn btn-outline-danger">Login</a></div>
+                  {% endif %}
               </div>
       </div>
     </nav>
     <div class="container mt-3">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="text-light">{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
         {% block content %}
         {% endblock %}
     </div>

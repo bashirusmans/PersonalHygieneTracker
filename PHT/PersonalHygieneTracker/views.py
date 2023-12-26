@@ -15,7 +15,7 @@ def loginPage(request):
         return redirect('home')
 
     if request.method == "POST":
-        email = request.POST.get('email').lower()
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         user = authenticate(request, email=email, password=password)
@@ -24,12 +24,13 @@ def loginPage(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username or password does not exist')
+            messages.error(request, 'Email or password does not exist')
 
 
     context = {'pagename':pagename}
     return render(request, 'PersonalHygieneTracker/login_register.html', context)
 
+@login_required(login_url="login")
 def logoutUser(request):
     logout(request)
     return redirect('home')
@@ -76,7 +77,15 @@ def updateUser(request):
     context = {'form':form}
     return render(request, 'PersonalHygieneTracker/edit-user.html', context)
 
+@login_required(login_url="login")
 def home(request):
-
-    context = {}
+    categories = models.Category.objects.all()
+    context = {'categories':categories}
     return render(request, 'PersonalHygieneTracker/home.html', context)
+
+@login_required(login_url="login")
+def category(request, pk):
+    category = models.Category.objects.get(id=int(pk))
+    routines = category.routine_set.all().order_by('-time')
+    context = {'routines':routines}
+    return render(request, 'PersonalHygieneTracker/category.html', context)

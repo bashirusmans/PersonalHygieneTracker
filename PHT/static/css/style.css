@@ -1,5 +1,7 @@
+{% load static %}
+
 body.dark{
-	background-image: url('bg.jpg'); 
+	background-image: url('../images/bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="input-group mt-3">
-          <form id="new">
-            <div class="d-flex">
-                <input required class="mx-1 dark" placeholder="Enter new routine here" type="text" id="input-field">
-                <button type="submit" form="new" class="dark submit-button"><span>ADD</span></button>
-            </div>
-          </form>
-    </div>
     <div class="d-inline-flex">
         <div data-mode="dark" class="row row-cols-1 row-cols-md-4 g-4" id="tasks">
+            {% for category in categories %}
 
+                <div class="card m-5 dark" style="width: 320px;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <div class="ms-auto p-2">
+                                <a href="{% url 'category' category.id %}" class="card-text fs-4">{{category}}</a>
+                            </div>
+                        </h5>
+                    </div>
+                </div>
+
+
+
+
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
