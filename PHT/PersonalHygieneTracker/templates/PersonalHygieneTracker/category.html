@@ -2,7 +2,8 @@
 {% block content %}
     <div>
         {% for routine in routines %}
-            <div>{{routine}}</div>
+            <div class="text-light">{{routine}}</div>
+            <div class="text-light">{{routine.time}}</div>
         {% endfor %}
     </div>
 {% endblock %}
