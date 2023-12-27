@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="d-flex justify-content-between" style="padding-top:180px">
+        <div class="my-5 py-5">
+            <div class="my-5">
+                <p>HYGIENE & HEALTH TRACKER</p>
+            </div>
+            <div class="my-5">
+                <h1 style="font-size: 70px">MyHygienePal</h1>
+                <small>Your Pal who will motivate you to adopt a hygienic lifestyle.</small>
+            </div>
+        </div>
+        <div class="my-5">
+            <img src="{% static 'images/leftimage.png' %}">
+        </div>
+    </div>
+    <div class="text-center">
+        <h4 class="blinking-text">Click anywhere to start</h4>
+    </div>
+    <script>
+        var bodyElement = document.body;
+
+        // Add an event listener to the body
+        bodyElement.addEventListener('click', function() {
+            // Replace 'your-link-here' with the actual URL you want to navigate to
+            window.location.href = '{% url 'login' %}';
+        });
+    </script>
+{% endblock %}

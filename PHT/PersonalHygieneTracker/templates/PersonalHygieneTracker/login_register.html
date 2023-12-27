@@ -1,66 +1,82 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if pagename == "login" %}
-        <div class="d-flex justify-content-center">
-            <div class="container shadow-lg m-3 border bg-dark my-5 rounded-5" style="width:500px">
-                <div class="p-3"><a class="btn btn-outline-danger" href="{% url 'home' %}"><--- Back to HomePage as Guest</a></div>
-                <hr>
-                <form id="loginform" method="post">
-                    {% csrf_token %}
-                    <div class="mb-3 row">
-                        <label for="email" class="text-danger col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-6 mx-5">
-                            <input type="email" class="input-creds form-control" id="email" name="email">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="password" class="text-danger col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-6 mx-5">
-                            <input type="password" class="input-creds form-control" id="password" name="password">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="pb-3 d-flex justify-content-center">
-                        <input id="loginbtn" type="submit" class="btn btn-warning rounded-5" value="Login">
-                    </div>
-                </form>
+
+        <div class="d-sm-flex justify-content-between" style="padding-top:180px">
+            <div class="my-5 py-5">
+                <div class="my-5">
+                    <p>HYGIENE & HEALTH TRACKER</p>
+                </div>
+                <div class="my-5">
+                    <h1 style="font-size: 70px">MyHygienePal</h1>
+                    <small>Your Pal who will motivate you to adopt a hygienic lifestyle.</small>
+                </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <span class="fs-3 text-secondary">No account yet?<a class="p-2 link-primary" href="{% url 'register' %}">Sign up</a></span>
+            <div class="my-5">
+                <div class="d-flex justify-content-center">
+                    <div class="container shadow-lg m-3 border bg-danger my-5 rounded-5">
+                        <div class="p-3"><a class="btn btn-light" href="{% url 'index' %}"><--- Back to Startup Page</a></div>
+                        <hr>
+                        <form id="loginform" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3 row">
+                                <label for="email" class="text-light col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-6 mx-5">
+                                    <input required type="email" class="text-dark form-control" id="email" name="email">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="password" class="text-light col-sm-2 col-form-label">Password</label>
+                                <div class="col-sm-6 mx-5">
+                                    <input required type="password" class="text-dark form-control" id="password" name="password">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="pb-3 d-flex justify-content-center">
+                                <input id="loginbtn" type="submit" class="btn btn-light rounded-5" value="Login">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="fs-3 text-secondary">No account yet?<a class="p-2 link-primary" href="{% url 'register' %}">Sign up</a></span>
+                </div>
+            </div>
         </div>
     {% else %}
-        <main class="auth layout">
-          <div class="container">
-            <div class="layout__box">
-              <div class="layout__boxHeader">
-                <div class="layout__boxTitle">
-                  <h3>Sign up</h3>
+        <div class="d-sm-flex justify-content-between" style="padding-top:180px">
+            <div class="my-5 py-5">
+                <div class="my-5">
+                    <p>HYGIENE & HEALTH TRACKER</p>
                 </div>
-              </div>
-              <div class="layout__body">
-
-                <form class="form" method="post" action="">
-                  {% csrf_token %}
-                  {% for field in form %}
-                  <div class="form__group form__group">
-                    <label>{{field.label}}</label>
-                    {{field}}
-                  </div>
-                  {% endfor %}
-                  <button class="btn btn-warning" type="submit">
-
-                    Sign Up
-                  </button>
-                </form>
-
-                <div class="auth__action">
-                  <p>Already have an account?</p>
-                  <a href="{% url 'login' %}">Log In</a>
+                <div class="my-5">
+                    <h1 style="font-size: 70px">MyHygienePal</h1>
+                    <small>Your Pal who will motivate you to adopt a hygienic lifestyle.</small>
                 </div>
-              </div>
             </div>
-          </div>
-        </main>
+            <div>
+                <div class="d-flex justify-content-center">
+                    <div class="container shadow-lg m-3 border bg-danger my-5 rounded-5">
+                        <div class="p-3"><a class="btn btn-light" href="{% url 'login' %}"><--- Back to Login Page</a></div>
+                        <hr>
+                        <form id="regform" method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="mb-3 row">
+                                    <label for="password" class="text-light col-sm-2 col-form-label my-1 mx-3">{{field.label}}</label>
+                                    <div class="col-sm-6 mx-5">
+                                        <input required type="{{field.field.widget.input_type}}" class="text-dark form-control my-1" name="{{field.name}}">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <hr>
+                            <div class="pb-3 d-flex justify-content-center">
+                                <input id="regbtn" type="submit" class="btn btn-light rounded-5" value="Signup">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

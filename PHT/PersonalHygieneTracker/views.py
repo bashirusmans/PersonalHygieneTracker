@@ -10,6 +10,7 @@ from . import forms
 
 def loginPage(request):
     pagename = 'login'
+    main = True
 
     if request.user.is_authenticated:
         return redirect('home')
@@ -27,15 +28,16 @@ def loginPage(request):
             messages.error(request, 'Email or password does not exist')
 
 
-    context = {'pagename':pagename}
+    context = {'pagename':pagename, 'main':main}
     return render(request, 'PersonalHygieneTracker/login_register.html', context)
 
 @login_required(login_url="login")
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('index')
 
 def registerUser(request):
+    main = True
     if request.method == "POST":
         form = forms.MyUserCreationForm(request.POST)
 
@@ -44,13 +46,13 @@ def registerUser(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('index')
         else:
             messages.error(request, "An error occured during registration")
 
     pagename = 'register'
     form = forms.MyUserCreationForm()
-    context = {'pagename':pagename, 'form':form}
+    context = {'pagename':pagename, 'form':form, 'main':main}
     return render(request, 'PersonalHygieneTracker/login_register.html', context)
 
 @login_required(login_url="login")
@@ -77,10 +79,16 @@ def updateUser(request):
     context = {'form':form}
     return render(request, 'PersonalHygieneTracker/edit-user.html', context)
 
+def index(request):
+    main = True
+    context = {'main':main}
+    return render(request, 'PersonalHygieneTracker/index.html', context)
+
 @login_required(login_url="login")
 def home(request):
-    categories = models.Category.objects.all()
-    context = {'categories':categories}
+    categories = models.Category.objects.filter(user__isnull=True)
+    user_categories = models.Category.objects.filter(user=request.user)
+    context = {'categories':categories, 'user_categories': user_categories}
     return render(request, 'PersonalHygieneTracker/home.html', context)
 
 @login_required(login_url="login")
@@ -89,3 +97,8 @@ def category(request, pk):
     routines = category.routine_set.all().order_by('-time')
     context = {'routines':routines}
     return render(request, 'PersonalHygieneTracker/category.html', context)
+
+def profile(request, pk):
+    user = models.User.objects.get(id=int(pk))
+    context = {'user':user}
+    return render(request, 'PersonalHygieneTracker/profile.html', context)
