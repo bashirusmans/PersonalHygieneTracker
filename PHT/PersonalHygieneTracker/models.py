@@ -35,13 +35,6 @@ class Routine(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     time = models.TimeField(default=time(hour=23, minute=59))
-    monday = models.BooleanField(default=True)
-    tuesday = models.BooleanField(default=True)
-    wednesday = models.BooleanField(default=True)
-    thursday = models.BooleanField(default=True)
-    friday = models.BooleanField(default=True)
-    saturday = models.BooleanField(default=True)
-    sunday = models.BooleanField(default=True)
     completed = models.BooleanField(default=False)
 
     def __str__(self):

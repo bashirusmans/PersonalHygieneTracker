@@ -57,7 +57,24 @@
         </div>
     </div>
     <div class="layout-2 right">
-        <h1>a</h1>
+        <div>
+            <div class="container shadow-lg border border-dark bg-info mt-5 rounded-top-2">
+                <h1 class="text-center">ROUTINES ALMOST DUE</h1>
+            </div>
+            <div class="container shadow-lg border border-dark bg-secondary mb-5 rounded-bottom-2">
+                {% for routine in due_routines %}
+                    <div class="border border-3 border-dark bg-secondary p-4 m-3">
+                        <h4 class="px-2 text-dark">Category: <a class="link-light" href="{% url 'category' routine.category.id %}">{{routine.category.name}}</a></h4>
+                        <h5 class="text-center text-dark">Routine: <a class="link-light" href="{% url 'routine' routine.id %}">{{routine.task}}</a></h5>
+                    </div>
+                {% endfor %}
+                {% if not due_routines %}
+                    <div class="border border-3 border-dark bg-secondary m-3">
+                        <h4 class="text-center">No routines due within next 15 minutes</h4>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

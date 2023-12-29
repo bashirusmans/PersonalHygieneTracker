@@ -5,9 +5,11 @@
             {% if routine.user %}
                 <h1 class="m-3 d-flex justify-content-between">
                     <div>
-                        <a class="btn btn-light" href="{% url 'home' %}"><--- Back to Home Page</a>
+                        <a class="btn btn-light" href="{% url 'category' routine.category.id %}"><--- Back to Category Page</a>
                     </div>
-                    {{routine.task}}
+                    <div>
+                        {{routine.task}}({% if routine.completed %}Completed{% else %}Incomplete{% endif %})
+                    </div>
                     <a href="{% url 'delete-routine' routine.id %}" class="px-4">
                         <svg class="text-dark mx-5" width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -23,7 +25,7 @@
                 </h1>
             {% else %}
                 <h1 class="m-3 d-flex justify-content-between">
-                    <a class="btn btn-light" href="{% url 'home' %}"><--- Back to Home Page</a>
+                    <a class="btn btn-light" href="{% url 'category' routine.category.id %}"><--- Back to Category Page</a>
                     {{routine.task}}
                     <a class="mx-5 px-5"></a>
                 </h1>
@@ -33,6 +35,17 @@
                 Description
             </h2>
             <h5 class="m-4">{{routine.description}}</h5>
+            <hr>
+            <div class="d-flex justify-content-center mb-3">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% if routine.completed %}
+                        <input value="Set as Incomplete" class="btn btn-light" type="submit">
+                    {% else %}
+                        <input value="Set as Completed" class="btn btn-light" type="submit">
+                    {% endif %}
+                </form>
+            </div>
 
         </div>
     </div>

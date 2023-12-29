@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
-from datetime import datetime
+from datetime import datetime, time, timedelta
+import pytz
 # Create your views here.
 
 def loginPage(request):
@@ -86,14 +87,32 @@ def index(request):
 
 @login_required(login_url="login")
 def home(request):
+
     count = models.Category.objects.filter(user=request.user).count()
+    your_timezone = 'Asia/Karachi'  # Replace with your actual timezone, e.g., 'America/New_York'
+
+    # Get the current time in your timezone
+    current_time = datetime.now(pytz.timezone(your_timezone)).time()
+    allroutines = models.Routine.objects.all()
+    if current_time.hour == 0 and current_time.minute == 0:
+        for routin in allroutines:
+            routin.completed = False
+    # Create a timedelta object representing 15 minutes
+    delta = timedelta(minutes=15)
+
+    # Add 15 minutes to the current time
+    new_time = (datetime.combine(datetime.today(), current_time) + delta).time()
+
+    print(new_time)
+
+    due_routines = models.Routine.objects.filter(user=request.user, completed=False, time__range=(current_time,new_time))
     if count >= 9:
         add = False
     else:
         add = True
     categories = models.Category.objects.filter(user__isnull=True)
     user_categories = models.Category.objects.filter(user=request.user)
-    context = {'categories':categories, 'user_categories': user_categories, 'add':add}
+    context = {'categories':categories, 'user_categories': user_categories, 'add':add, 'due_routines':due_routines}
     return render(request, 'PersonalHygieneTracker/home.html', context)
 
 @login_required(login_url="login")
@@ -122,6 +141,9 @@ def addCategory(request):
 @login_required(login_url="login")
 def routine(request, pk):
     routine = models.Routine.objects.get(id=int(pk))
+    if request.method == "POST":
+        routine.completed = not routine.completed
+        routine.save()
     context = {'routine':routine}
     return render(request, 'PersonalHygieneTracker/routine.html', context)
 
@@ -133,13 +155,6 @@ def addRoutine(request, pk):
         if user != category.user:
             return redirect('home')
     if request.method == 'POST':
-        monday = 'monday' in request.POST
-        tuesday = 'tuesday' in request.POST
-        wednesday = 'wednesday' in request.POST
-        thursday = 'thursday' in request.POST
-        friday = 'friday' in request.POST
-        saturday = 'saturday' in request.POST
-        sunday = 'sunday' in request.POST
         task = request.POST.get('task')
         description = request.POST.get('description')
         time = request.POST.get('time')
@@ -147,7 +162,7 @@ def addRoutine(request, pk):
         # Convert the string to a time object
         time_object = datetime.strptime(time, "%I:%M %p").time()
 
-        new_routine, created = models.Routine.objects.get_or_create(user=user, category=category, task=task, description=description, time=time_object, monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
+        new_routine, created = models.Routine.objects.get_or_create(user=user, category=category, task=task, description=description, time=time_object)
         if not created:
             messages.error(request, 'An error occured during creation. Please fill all fields with valid data')
         else:
@@ -202,7 +217,6 @@ def updateUser(request):
                 pass
         form = forms.UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
-            print(form)
             form.save()
             return redirect('profile', pk=user.id)
         else:
