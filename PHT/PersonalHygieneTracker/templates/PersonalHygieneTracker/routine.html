@@ -2,13 +2,13 @@
 {% block content %}
     <div>
         <div class="container shadow-lg m-3 border bg-secondary my-5 rounded-5">
-            {% if category.user %}
+            {% if routine.user %}
                 <h1 class="m-3 d-flex justify-content-between">
                     <div>
                         <a class="btn btn-light" href="{% url 'home' %}"><--- Back to Home Page</a>
                     </div>
-                    {{category.name}}
-                    <a href="{% url 'delete-category' category.id %}" class="px-4">
+                    {{routine.task}}
+                    <a href="{% url 'delete-routine' routine.id %}" class="px-4">
                         <svg class="text-dark mx-5" width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
@@ -24,28 +24,16 @@
             {% else %}
                 <h1 class="m-3 d-flex justify-content-between">
                     <a class="btn btn-light" href="{% url 'home' %}"><--- Back to Home Page</a>
-                    {{category.name}}
+                    {{routine.task}}
                     <a class="mx-5 px-5"></a>
                 </h1>
             {% endif %}
             <hr>
             <h2 class="m-3 text-center">
-                Routines
+                Description
             </h2>
-            {% if routines %}
-                {% for routine in routines %}
-                    <div class="d-flex border justify-content-between m-5 py-3 px-5 rounded-3">
-                        <div class="text-light"><h4><a class="link-light" href="{% url 'routine' routine.id %}">{{routine.task}}</a></h4></div>
-                        <div class="text-light"><h4>{{routine.time}}</h4></div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <h4 class="text-light text-center">You have no routines in this category</h4>
-            {% endif %}
-            <hr>
-            <div class="d-flex justify-content-center m-3">
-                <a href="{% url 'add-routine' category.id %}" class="btn btn-light"><h1>+</h1> Add a Routine</a>
-            </div>
+            <h5 class="m-4">{{routine.description}}</h5>
+
         </div>
     </div>
 {% endblock %}

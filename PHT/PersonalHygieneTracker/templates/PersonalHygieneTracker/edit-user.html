@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="my-5">
+        <div class="d-flex justify-content-center">
+            <div class="container shadow-lg m-3 border bg-danger my-5 rounded-5">
+                <div class="p-3">
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-light" href="{% url 'profile' user.id %}">
+                            <--- Back to User Profile
+                        </a>
+                    </div>
+                    <h3 class="text-center">Edit your profile</h3>
+                </div>
+                <hr>
+                <form id="userform" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3 row">
+                            <label class="text-light col-sm-2 col-form-label my-1 mx-3">{{field.label}}</label>
+                            <div class="col-sm-6 mx-5">
+                                {% if field.label == 'Avatar' %}
+                                    {{field}}
+                                {% else %}
+                                    <input required type="{{field.field.widget.input_type}}" class="text-dark form-control my-1" name="{{field.name}}" value="{{field.value}}">
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="mx-5 my-3 d-flex justify-content-evenly">
+                        <a class="btn btn-danger" href="{% url 'profile' user.id %}">Cancel</a>
+                        <button class="btn btn-success" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

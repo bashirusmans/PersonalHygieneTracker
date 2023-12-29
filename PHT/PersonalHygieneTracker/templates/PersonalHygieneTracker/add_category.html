@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="my-5">
+        <div class="d-flex justify-content-center">
+            <div class="container shadow-lg m-3 border bg-danger my-5 rounded-5" style="width:350px">
+                <div class="p-3"><a class="btn btn-light" href="{% url 'home' %}"><--- Back to Home Page</a></div>
+                <hr>
+                <form id="categoryform" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 text-center">
+                        <label for="name" class="text-light mb-3">Category Name</label>
+                        <div class="mx-5">
+                            <input required type="text" class="text-dark form-control" id="name" name="name">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="pb-3 d-flex justify-content-center">
+                        <input id="createbtn" type="submit" class="btn btn-light rounded-5" value="Create">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

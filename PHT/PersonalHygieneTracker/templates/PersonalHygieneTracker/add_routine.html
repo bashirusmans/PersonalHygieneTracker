@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="my-5">
+        <div class="d-flex justify-content-center">
+            <div class="container shadow-lg m-3 border bg-danger my-5 rounded-5">
+                <div class="p-3"><a class="btn btn-light" href="{% url 'category' category.id %}"><--- Back to Category Page</a></div>
+                <hr>
+                <form id="routineform" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 text-center">
+                        <label for="task" class="text-light mb-3">Task</label>
+                        <div class="mx-5">
+                            <input required type="text" class="text-dark form-control" id="task" name="task">
+                        </div>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <label for="description" class="text-light mb-3">Description</label>
+                        <div class="mx-5">
+                            <textarea required type="text" class="text-dark form-control" id="description" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <label for="description" class="text-light mb-3">Time</label>
+                        <div class="mx-5">
+                            <input type="text" class="time-pickable" readonly name="time">
+                        </div>
+                    </div>
+                    <div class="mb-3 my-5 d-flex justify-content-evenly">
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <button type="button" class="btn btn-light" id="everyday">&#x2611;</button>
+                            </div>
+                            <label class="text-light mb-3">Check every day</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <button type="button" class="btn btn-light" id="noday">&#x2612;</button>
+                            </div>
+                            <label class="text-light mb-3">Uncheck every day</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 my-5 d-flex justify-content-evenly">
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="monday">
+                            </div>
+                            <label class="text-light mb-3">Monday</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="tuesday">
+                            </div>
+                            <label class="text-light mb-3">Tuesday</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="wednesday">
+                            </div>
+                            <label class="text-light mb-3">Wednesday</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="thursday">
+                            </div>
+                            <label class="text-light mb-3">Thursday</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 my-5 d-flex justify-content-evenly">
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="friday">
+                            </div>
+                            <label class="text-light mb-3">Friday</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="saturday">
+                            </div>
+                            <label class="text-light mb-3">Saturday</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mx-2">
+                                <input type="checkbox" class="ui-checkbox" name="sunday">
+                            </div>
+                            <label class="text-light mb-3">Sunday</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="pb-3 d-flex justify-content-center">
+                        <input id="createbtn" type="submit" class="btn btn-light rounded-5" value="Create">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
